@@ -2,7 +2,7 @@ import AverageSensitivity.Multilinearization
 import AverageSensitivity.WallisMAD
 
 /-!
-# R7 assembly: `AS(f) ≤ (8/√(2π))·d·√n`, closed at the rational `683/214`
+# R7 assembly: `AS(f) ≤ (8/√(2π))·d·√n`, closed at the rational `90295/28292`
 
 The final uniform statement of the R7 campaign.  The four machine-verified
 ingredients are combined here and nothing else is touched:
@@ -18,11 +18,11 @@ ingredients are combined here and nothing else is touched:
   (WallisMAD.lean, paper eqs. (18)–(19)) — `2π·(mad n)²·(n+d)² ≤ n·(n+2d)²`,
   i.e. `mad n·(n+d)/(n+2d) ≤ √n/√(2π)`;
 * the rational certificate `cert_8_div_sqrt_two_pi_lt` (WallisMAD.lean) —
-  `8/√(2π) < 683/214`, its squaring needing only `π > 1465472/466489`, discharged
-  by Mathlib's `Real.pi_gt_d4` (`3.1415 < π`).
+  `8/√(2π) < 90295/28292`, its squaring needing only `π > 25613992448/8153187025`, discharged
+  by Mathlib's `Real.pi_gt_d20` (`3.14159265358979323846 < π`).
 
-Chain: `AS(f) ≤ 8·d·mad n·(n+d)/(n+2d) ≤ (8/√(2π))·d·√n < (683/214)·d·√n`.
-The submission-grade deliverable is `AS_bound_683_214`.
+Chain: `AS(f) ≤ 8·d·mad n·(n+d)/(n+2d) ≤ (8/√(2π))·d·√n < (90295/28292)·d·√n`.
+The submission-grade deliverable is `AS_bound_90295_28292`.
 -/
 
 open scoped BigOperators
@@ -186,11 +186,11 @@ theorem polynomial_bound_sqrt_two_pi_general {n d : ℕ} (hn : 1 ≤ n) (hd : 1 
   exact polynomial_bound_sqrt_two_pi hn hd _ (multilinearize_isMultilinear p)
     ((multilinearize_degree_le p).trans hdegree)
 
-/-! ## The rational constant: `683/214` -/
+/-! ## The rational constant: `90295/28292` -/
 
-theorem polynomial_bound_683_214 {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
+theorem polynomial_bound_90295_28292 {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
     (p : MvPolynomial (Fin n) ℝ) (hp : IsMultilinear p) (hdegree : p.totalDegree ≤ d) :
-    averageSensitivity (polynomialThreshold p) ≤ (683/214:ℝ)*(d:ℝ)*Real.sqrt (n:ℝ) := by
+    averageSensitivity (polynomialThreshold p) ≤ (90295/28292:ℝ)*(d:ℝ)*Real.sqrt (n:ℝ) := by
   have h := polynomial_bound_sqrt_two_pi hn hd p hp hdegree
   have hd0 : 0 ≤ (d:ℝ) := Nat.cast_nonneg d
   have hdn : 0 ≤ (d:ℝ)*Real.sqrt (n:ℝ) := mul_nonneg hd0 (Real.sqrt_nonneg _)
@@ -198,11 +198,11 @@ theorem polynomial_bound_683_214 {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
   rw [← mul_assoc, ← mul_assoc] at hstep
   exact h.trans hstep
 
-/-- **Submission-grade uniform bound — the R7 `683/214` theorem.**
+/-- **Submission-grade uniform bound — the R7 `90295/28292` theorem.**
 For every `p : MvPolynomial (Fin n) ℝ` with `p.totalDegree ≤ d`, `1 ≤ n`, `1 ≤ d`
 (no multilinearity hypothesis — `multilinearize` removes it):
 
-`averageSensitivity (polynomialThreshold p) ≤ (683/214)·d·√n`,  `683/214 = 3.191588785…`.
+`averageSensitivity (polynomialThreshold p) ≤ (90295/28292)·d·√n`,  `90295/28292 = 3.191538244…`.
 
 **Assembly map** (which lemma feeds which factor):
 
@@ -224,12 +224,13 @@ For every `p : MvPolynomial (Fin n) ℝ` with `p.totalDegree ≤ d`, `1 ≤ n`, 
   `mad n·(n+d)/(n+2d) ≤ √n/√(2π)` (`mad_block_le_sqrt`).  Times `8d`:
   `AS(f) ≤ (8/√(2π))·d·√n` (`polynomial_bound_sqrt_two_pi`).
 * **the rational constant.** `cert_8_div_sqrt_two_pi_lt` (WallisMAD.lean):
-  `8/√(2π) < 683/214`.  Squared, the certificate needs only
-  `π > 1465472/466489 ≈ 3.1414932`; the **exact π margin** used is Mathlib's
-  `Real.pi_gt_d4` (`3.1415 < π`) — the arctan(1/2)+arctan(1/3) route is
-  unnecessary.  `683/214` is the sharpest rational `pi_gt_d4` certifies below
-  `399/125` (improvement `4.112150e-04`); the chain's own supremum is
-  `8/√(2π) = 3.191538243…`, so this literal is the whole remaining slack.
+  `8/√(2π) < 90295/28292`.  Squared, the certificate needs only
+  `π > 25613992448/8153187025 ≈ 3.1415926535897932`; the **exact π margin** used
+  is Mathlib's `Real.pi_gt_d20` (`3.14159265358979323846 < π`) — the
+  arctan(1/2)+arctan(1/3) route is unnecessary.  `90295/28292` is a
+  continued-fraction convergent of the chain's own supremum
+  `8/√(2π) = 3.191538243…` (improvement over `683/214`: `5.054102e-05`;
+  remaining slack `8.151e-10`), so this literal is the whole remaining slack.
 
 **Odd-n handling.** `wallis_block_sq_of_even` covers `n = 2k` for every `d`
 (including `k = 0`); `wallis_block_sq_of_odd` covers `n = 2k+1` and needs
@@ -238,23 +239,23 @@ beats `√(1/2π)`.  The hypothesis `hd : 1 ≤ d` supplies it (degree-`0` thres
 have `AS = 0` and are covered by the bound trivially through the same statement),
 and `wallis_block_sq` is the parity split that feeds `mad_block_le_sqrt`.
 
-Chain: `AS(f) ≤ 8·d·mad n·(n+d)/(n+2d) ≤ (8/√(2π))·d·√n < (683/214)·d·√n`. -/
-theorem AS_bound_683_214 {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
+Chain: `AS(f) ≤ 8·d·mad n·(n+d)/(n+2d) ≤ (8/√(2π))·d·√n < (90295/28292)·d·√n`. -/
+theorem AS_bound_90295_28292 {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
     (p : MvPolynomial (Fin n) ℝ) (hdegree : p.totalDegree ≤ d) :
-    averageSensitivity (polynomialThreshold p) ≤ (683/214:ℝ)*(d:ℝ)*Real.sqrt (n:ℝ) := by
+    averageSensitivity (polynomialThreshold p) ≤ (90295/28292:ℝ)*(d:ℝ)*Real.sqrt (n:ℝ) := by
   have hsame : polynomialThreshold (multilinearize p) = polynomialThreshold p := by
     funext x
     unfold polynomialThreshold
     rw [multilinearize_value]
   rw [←hsame]
-  exact polynomial_bound_683_214 hn hd _ (multilinearize_isMultilinear p)
+  exact polynomial_bound_90295_28292 hn hd _ (multilinearize_isMultilinear p)
     ((multilinearize_degree_le p).trans hdegree)
 
-/-- Tree-convention alias of `AS_bound_683_214`, mirroring
+/-- Tree-convention alias of `AS_bound_90295_28292`, mirroring
 `polynomial_bound_3762_general`'s naming. -/
-theorem polynomial_bound_683_214_general {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
+theorem polynomial_bound_90295_28292_general {n d : ℕ} (hn : 1 ≤ n) (hd : 1 ≤ d)
     (p : MvPolynomial (Fin n) ℝ) (hdegree : p.totalDegree ≤ d) :
-    averageSensitivity (polynomialThreshold p) ≤ (683/214:ℝ)*(d:ℝ)*Real.sqrt (n:ℝ) :=
-  AS_bound_683_214 hn hd p hdegree
+    averageSensitivity (polynomialThreshold p) ≤ (90295/28292:ℝ)*(d:ℝ)*Real.sqrt (n:ℝ) :=
+  AS_bound_90295_28292 hn hd p hdegree
 
 end AverageSensitivity

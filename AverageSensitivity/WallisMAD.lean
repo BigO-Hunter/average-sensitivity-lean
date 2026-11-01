@@ -26,11 +26,13 @@ R7-FORMALIZATION-PLAN ingredient 4 (paper §6, eqs. 18–19). The chain:
   form of `√(2π)·b_n·(n+d)/(√n·(n+2d)) ≤ 1` (their last three displays).  For
   odd `n` this needs `d ≥ 1` (the odd-n absorption; at `d = 0` the odd value
   `mad 1 = 1/2` beats `√(1/2π)`).
-* `cert_8_div_sqrt_two_pi_lt`: the rational certificate `8/√(2π) < 683/214`.
-  It needs only `π > 1465472/466489 ≈ 3.1414932`; Mathlib's `Real.pi_gt_d4`
-  (`3.1415 < π`) already suffices, so the arctan(1/2)+arctan(1/3) route is
-  unnecessary.  `683/214` is the sharpest rational `pi_gt_d4` certifies below the
-  previous `399/125` witness (improvement `4.112150e-04`).
+* `cert_8_div_sqrt_two_pi_lt`: the rational certificate `8/√(2π) < 90295/28292`.
+  It needs only `π > 25613992448/8153187025 ≈ 3.1415926535897932`; Mathlib's
+  `Real.pi_gt_d20` (`3.14159265358979323846 < π`) already suffices, so the
+  arctan(1/2)+arctan(1/3) route is unnecessary.  `90295/28292` is a
+  continued-fraction convergent of `8/√(2π)` — it improves the previous
+  `683/214` witness by `5.054102e-05` and sits `8.151e-10` above the true
+  constant.
 -/
 
 open Filter
@@ -352,15 +354,16 @@ theorem wallis_block_sq_of_odd (k d : ℕ) (hd : 0 < d) :
     linarith
   exact hle.trans h4
 
-/-! ## The rational certificate: `8/√(2π) < 683/214` -/
+/-! ## The rational certificate: `8/√(2π) < 90295/28292` -/
 
-/-- **Rational certificate** `8/√(2π) < 683/214 = 3.191588785…`.
+/-- **Rational certificate** `8/√(2π) < 90295/28292 = 3.191538244…`.
 
-This is the sharpest rational the chain can certify with Mathlib's
-`Real.pi_gt_d4` (`3.1415 < π`) alone, and it improves the previous witness
-`399/125 = 3.192` by `4.112150e-04` (0.0129%).  Squaring turns the claim into
-`π > 1465472/466489 ≈ 3.1414932`, which `3.1415 < π` covers with room to spare
-(exact check: `64 < (683/214)² * 2 * 3.1415 = 2930950387/45796000`).
+This is a continued-fraction convergent of the chain's true constant,
+certified with Mathlib's `Real.pi_gt_d20` (`3.14159265358979323846 < π`), and
+it improves the previous witness `683/214 = 3.191588785…` by `5.054102e-05`.
+Squaring turns the claim into `π > 25613992448/8153187025 ≈ 3.1415926535897932`,
+which `pi_gt_d20` covers (exact check: `64 < (90295/28292)² * 2 * 3.1415926…846`,
+integer margin `2616724380848960596300`).
 
 The chain's true uniform constant is `8/√(2π) = 3.191538243…` — a supremum
 that is approached from below and never attained (`8·mad n·(n+d)/(n+2d)·d/√n`
@@ -368,18 +371,18 @@ is increasing in `n` and decreasing in `d`, so its worst case is `d = 1` and
 its limit is `8/√(2π)`), so the only slack left in this route is the rational
 certificate itself.  No new lemma is needed: the same proof shape discharges
 the tighter literal. -/
-theorem cert_8_div_sqrt_two_pi_lt : (8:ℝ)/Real.sqrt (2*Real.pi) < 683/214 := by
+theorem cert_8_div_sqrt_two_pi_lt : (8:ℝ)/Real.sqrt (2*Real.pi) < 90295/28292 := by
   have h2pi : 0 < 2*Real.pi := by positivity
   have hs : 0 < Real.sqrt (2*Real.pi) := Real.sqrt_pos.mpr h2pi
-  have hR : (0:ℝ) < 683/214 := by norm_num
-  have hbase : (0:ℝ) ≤ 683/214 * Real.sqrt (2*Real.pi) := le_of_lt (mul_pos hR hs)
+  have hR : (0:ℝ) < 90295/28292 := by norm_num
+  have hbase : (0:ℝ) ≤ 90295/28292 * Real.sqrt (2*Real.pi) := le_of_lt (mul_pos hR hs)
   rw [div_lt_iff₀ hs, ← sq_lt_sq₀ (by norm_num : (0:ℝ) ≤ 8) hbase, mul_pow,
     Real.sq_sqrt h2pi.le]
   norm_num only [pow_two]
-  -- goal: 64 < 466489/45796 * (2π);  it suffices that π > 3.1415
-  have hpi : (3.1415:ℝ) < Real.pi := Real.pi_gt_d4
-  have h64 : (64:ℝ) < 466489/45796 * 2 * 3.1415 := by norm_num
-  have hconst : (0:ℝ) < 466489/45796 * 2 := by norm_num
+  -- goal: 64 < 8153187025/800437264 * (2π);  it suffices that π > 3.14159265358979323846
+  have hpi : (3.14159265358979323846:ℝ) < Real.pi := Real.pi_gt_d20
+  have h64 : (64:ℝ) < 8153187025/800437264 * 2 * 3.14159265358979323846 := by norm_num
+  have hconst : (0:ℝ) < 8153187025/800437264 * 2 := by norm_num
   have hmul := mul_le_mul_of_nonneg_left hpi.le hconst.le
   linarith
 

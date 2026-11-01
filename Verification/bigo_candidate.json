@@ -1,7 +1,7 @@
 {
   "entry_point": "Race.bound",
-  "target": "BigOSpeedrun.AverageSensitivity.Bound (683/214 : \u211a)",
-  "bound": "683/214",
+  "target": "BigOSpeedrun.AverageSensitivity.Bound (90295/28292 : \u211a)",
+  "bound": "90295/28292",
   "status": "candidate-for-proposed-target-not-yet-enabled-by-Big-O",
   "modules": [
     {
@@ -175,8 +175,8 @@
     "Mathlib.Analysis.Real.Pi.Bounds",
     "Mathlib.Topology.Order.MonotoneConvergence"
   ],
-  "sha256": "45a0ba7e1ac59ddba97bab5ecd7eaad73614989b558156098ad852e674fc8f4e",
-  "byte_count": 305610,
+  "sha256": "3d16c5085f3c9e9063a20ee736240c03939360f32bf03beda7eff353c74d0978",
+  "byte_count": 306033,
   "toolchain": "leanprover/lean4:v4.33.1",
   "mathlib": "0df444a360eaa60ab8c11dca51a86af692955474"
 }
