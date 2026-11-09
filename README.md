@@ -1,3 +1,5 @@
+> **BigO-Hunter fork notice.** The org's reference copy of [Anchen-AI4Math/average-sensitivity-lean](https://github.com/Anchen-AI4Math/average-sensitivity-lean) — the Lean proof of AS ≤ (1881/500)·d·√n, kept for study and reruns in the average-sensitivity board lane. Upstream's README below is unchanged; upstream's Apache-2.0 license applies.
+
 # Average sensitivity: a Lean proof with coefficient 3.762
 
 For every real polynomial `p` in `n ≥ 1` variables of total degree at most
