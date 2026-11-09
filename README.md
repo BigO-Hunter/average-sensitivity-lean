@@ -1,4 +1,4 @@
-> **BigO-Hunter fork notice.** The org's reference copy of [Anchen-AI4Math/average-sensitivity-lean](https://github.com/Anchen-AI4Math/average-sensitivity-lean) — the Lean proof of AS ≤ (1881/500)·d·√n, kept for study and reruns in the average-sensitivity board lane. Upstream's README below is unchanged; upstream's Apache-2.0 license applies.
+> **BigO-Hunter fork notice.** The org's reference copy of [Anchen-AI4Math/average-sensitivity-lean](https://github.com/Anchen-AI4Math/average-sensitivity-lean) — the Lean proof of AS ≤ (1881/500)·d·√n, kept for study and reruns in the average-sensitivity board lane. Upstream's README below is unchanged; the org stamps this copy's LICENSE with the Copy-Free/Stays-Free (CFSF) License — see [LICENSE](LICENSE) ([github.com/darkhipo/cfsf](https://github.com/darkhipo/cfsf)) (upstream's own Apache-2.0 remains as published — see [NOTICE](NOTICE.md)).
 
 # Average sensitivity: a Lean proof with coefficient 3.762
 
